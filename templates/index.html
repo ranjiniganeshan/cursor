@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Task Manager</title>
+    <style>
+      body { font-family: system-ui, Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 16px; }
+      .task { border: 1px solid #ddd; border-radius: 8px; padding: 12px; margin: 12px 0; }
+      .done { opacity: 0.7; }
+      .row { display: flex; gap: 8px; flex-wrap: wrap; }
+      input, textarea { width: 100%; padding: 8px; }
+      button { padding: 8px 12px; cursor: pointer; }
+      .title { font-weight: 700; }
+    </style>
+  </head>
+
+  <body>
+    <h1>Task Manager</h1>
+
+    <h2>Add a task</h2>
+    <form method="post" action="/add">
+      <div class="row">
+        <div style="flex: 1 1 240px;">
+          <label>Title</label>
+          <input name="title" placeholder="e.g., Buy groceries" required />
+        </div>
+      </div>
+
+      <div style="margin-top: 8px;">
+        <label>Description (optional)</label>
+        <textarea name="description" rows="3" placeholder="Add more details..."></textarea>
+      </div>
+
+      <div style="margin-top: 8px;">
+        <button type="submit">Add</button>
+      </div>
+    </form>
+
+    <h2 style="margin-top: 28px;">All tasks</h2>
+
+    {% for t in tasks %}
+      <div class="task {% if t['completed'] %}done{% endif %}">
+        <div class="title">
+          {% if t['completed'] %}✅{% else %}⬜{% endif %}
+          {{ t["title"] }}
+        </div>
+
+        {% if t["description"] %}
+          <div style="margin-top: 6px;">{{ t["description"] }}</div>
+        {% endif %}
+
+        <div style="display: flex; gap: 8px; margin-top: 10px;">
+          {% if not t["completed"] %}
+            <form method="post" action="/complete/{{ t['id'] }}">
+              <button type="submit">Mark completed</button>
+            </form>
+          {% endif %}
+          <form method="post" action="/delete/{{ t['id'] }}" onsubmit="return confirm('Delete this task?');">
+            <button type="submit" style="background: #b91c1c; color: white;">Delete</button>
+          </form>
+        </div>
+      </div>
+    {% endfor %}

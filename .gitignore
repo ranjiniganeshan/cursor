@@ -1,0 +1,6 @@
+.venv/
+__pycache__/
+*.pyc
+tasks.db
+.cursor/
+.DS_Store
