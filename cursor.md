@@ -1,3 +1,24 @@
+## Explain cursor usage
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Personal Task & Notes Manager
 
 Step 1: Create Backend (Flask App)
@@ -28,4 +49,6 @@ Requirements:
 - Update database accordingly
 
 ```
+
+
 
